@@ -1,6 +1,6 @@
 import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { useAgent } from "agents/react";
-import { useEffect, useEffectEvent, useId, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 import replayFixture from "../../fixtures/trace8-replay.json";
 import { ReproChatPanel } from "../repro-chat-panel";
@@ -28,8 +28,8 @@ export function meta() {
 
 export default function Home() {
   const fixtureSummary = replayFixture.summary as ReplayFixtureSummary;
-  const sessionPrefix = useId().replaceAll(":", "-");
   const [sessionGeneration, setSessionGeneration] = useState(0);
+  const [sessionPrefix] = useState(() => crypto.randomUUID());
   const autoStartedSessionRef = useRef<string | null>(null);
   const sessionName = `repro-${sessionPrefix}-${sessionGeneration}`;
   const agent = useAgent({
