@@ -1,6 +1,6 @@
 import { useAgentChat } from "@cloudflare/ai-chat/react";
 import { useAgent } from "agents/react";
-import { startTransition, useEffect, useEffectEvent, useId, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useId, useRef, useState } from "react";
 
 import replayFixture from "../../fixtures/trace8-replay.json";
 import { ReproChatPanel } from "../repro-chat-panel";
@@ -8,7 +8,6 @@ import {
   DEFAULT_PROMPT,
   DEFAULT_REPLAY_SPEED_MULTIPLIER,
   REPLAY_AGENT_RUNTIME_NAME,
-  REPLAY_SPEED_OPTIONS,
   type ReplayFixtureSummary,
 } from "../../shared/repro";
 
@@ -31,10 +30,6 @@ export default function Home() {
   const fixtureSummary = replayFixture.summary as ReplayFixtureSummary;
   const sessionPrefix = useId().replaceAll(":", "-");
   const [sessionGeneration, setSessionGeneration] = useState(0);
-  const [speedMultiplier, setSpeedMultiplier] = useState(DEFAULT_REPLAY_SPEED_MULTIPLIER);
-  const [lastPrompt, setLastPrompt] = useState(DEFAULT_PROMPT);
-  const [lastAction, setLastAction] = useState("idle");
-  const [lastActionError, setLastActionError] = useState<string | null>(null);
   const autoStartedSessionRef = useRef<string | null>(null);
   const sessionName = `repro-${sessionPrefix}-${sessionGeneration}`;
   const agent = useAgent({
@@ -43,26 +38,17 @@ export default function Home() {
   });
   const chat = useAgentChat({
     agent,
-    body: () => ({ speedMultiplier }),
+    body: () => ({ speedMultiplier: DEFAULT_REPLAY_SPEED_MULTIPLIER }),
     getInitialMessages: null,
   });
 
-  const runReplay = useEffectEvent(async (prompt = lastPrompt) => {
-    setLastPrompt(prompt);
-    setLastAction("sending");
-    setLastActionError(null);
-
+  const runReplay = useEffectEvent(async () => {
     try {
       await chat.sendMessage({
-        parts: [{ text: prompt, type: "text" }],
+        parts: [{ text: DEFAULT_PROMPT, type: "text" }],
         role: "user",
       });
-      setLastAction("sent");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-
-      setLastAction("send-failed");
-      setLastActionError(errorMessage);
       console.error("Repro sendMessage failed", error);
     }
   });
@@ -73,14 +59,11 @@ export default function Home() {
     }
 
     autoStartedSessionRef.current = sessionName;
-    setLastAction("auto-started");
     void runReplay();
   }, [agent.identified, runReplay, sessionName]);
 
   useEffect(() => {
     autoStartedSessionRef.current = null;
-    setLastAction("idle");
-    setLastActionError(null);
   }, [sessionName]);
 
   useEffect(() => {
@@ -96,62 +79,16 @@ export default function Home() {
       <section className="panel">
         <h1>`useAgentChat` Max Depth Repro</h1>
         <p>
-          This route mounts a real Cloudflare <code>AIChatAgent</code> and replays a captured
-          production chunk sequence through <code>useAgentChat</code>. The expected failure is the
-          same React error seen in production:
+          This page auto-replays a captured production multi-tool stream through a real{" "}
+          <code>AIChatAgent</code> and <code>useAgentChat</code> client at{" "}
+          <strong>{DEFAULT_REPLAY_SPEED_MULTIPLIER}x</strong> speed. Expected result:
         </p>
         <pre className="callout">
           Maximum update depth exceeded. This can happen when a component repeatedly calls
           setState inside componentWillUpdate or componentDidUpdate.
         </pre>
 
-        <dl className="stats">
-          <div>
-            <dt>Captured request</dt>
-            <dd>{fixtureSummary.captureRequestId}</dd>
-          </div>
-          <div>
-            <dt>Tool calls</dt>
-            <dd>{fixtureSummary.toolCount}</dd>
-          </div>
-          <div>
-            <dt>`tool-input-delta` chunks</dt>
-            <dd>{fixtureSummary.inputDeltaCount}</dd>
-          </div>
-          <div>
-            <dt>Replay duration</dt>
-            <dd>{formatDuration(fixtureSummary.durationMs)}</dd>
-          </div>
-        </dl>
-
         <div className="controls">
-          <label>
-            <span>Replay speed</span>
-            <select
-              onChange={(event) => {
-                setSpeedMultiplier(Number(event.currentTarget.value));
-              }}
-              value={String(speedMultiplier)}
-            >
-              {REPLAY_SPEED_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <button
-            onClick={() => {
-              startTransition(() => {
-                void runReplay();
-              });
-            }}
-            type="button"
-          >
-            Run replay
-          </button>
-
           <button
             onClick={() => {
               setSessionGeneration((currentValue) => currentValue + 1);
@@ -167,34 +104,21 @@ export default function Home() {
             <strong>Status</strong>: {chat.status}
           </div>
           <div>
-            <strong>Agent</strong>: {REPLAY_AGENT_RUNTIME_NAME}
+            <strong>Capture</strong>: {fixtureSummary.captureRequestId}
           </div>
           <div>
-            <strong>Connected</strong>: {String(agent.identified)}
+            <strong>Tools</strong>: {fixtureSummary.toolCount}
           </div>
           <div>
-            <strong>Session</strong>: {sessionName}
+            <strong>Deltas</strong>: {fixtureSummary.inputDeltaCount}
           </div>
           <div>
-            <strong>HTTP URL</strong>: {agent.getHttpUrl()}
-          </div>
-          <div>
-            <strong>Prompt</strong>: {lastPrompt}
-          </div>
-          <div>
-            <strong>Last action</strong>: {lastAction}
-          </div>
-          <div>
-            <strong>Last action error</strong>: {lastActionError ?? "none"}
-          </div>
-          <div>
-            <strong>Messages</strong>: {chat.messages.length}
+            <strong>Replay</strong>: {formatDuration(fixtureSummary.durationMs)} at{" "}
+            {DEFAULT_REPLAY_SPEED_MULTIPLIER}x
           </div>
         </div>
 
-        <ReproChatPanel
-          chat={chat}
-        />
+        <ReproChatPanel chat={chat} />
       </section>
     </main>
   );
