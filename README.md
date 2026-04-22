@@ -1,167 +1,163 @@
-# `useAgentChat` Maximum Update Depth Repro
+# `useAgentChat` Maximum Update Depth Reproduction
 
-Single-purpose reproduction for:
+This repository reproduces:
 
 ```text
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 ```
 
-## Purpose
+## What This Reproduces
 
-This repo demonstrates the bug with the smallest surface I could keep while still reproducing it consistently.
+This is a minimal Cloudflare-oriented repro for a streamed multi-tool chat failure in the `useAgentChat` stack.
 
-What is intentionally real here:
+The reproduction uses:
 
 - a real `AIChatAgent`
 - a real `useAgentChat` client
-- the normal `cf_agent_use_chat_response` chunk path
-- a replay derived from a real production failure
+- the normal `cf_agent_use_chat_response` streaming path
+- a replay derived from a real production chunk sequence
 
-What is intentionally gone:
+The agent is not returning a hand-written final message list. It streams replayed chunks through the normal transport path so the failure happens in the same client-side stream application code that production uses.
 
-- React Router
-- app-specific business logic
-- TypeScript/tooling that is not required to trigger the bug
+## Versions
 
-The repo is now a plain Vite React page plus a vanilla Cloudflare Worker entry.
+Core package versions in this repo:
 
-## Direct Dependencies
+- `@cloudflare/ai-chat@0.4.4`
+- `agents@0.11.0`
+- `ai@6.0.162`
+- `react@19.2.4`
+- `react-dom@19.2.4`
 
-Runtime:
-
-- `@cloudflare/ai-chat`
-- `agents`
-- `ai`
-- `react`
-- `react-dom`
-
-Dev-only:
-
-- `vite`
-- `@vitejs/plugin-react`
-- `@cloudflare/vite-plugin`
-- `wrangler`
-
-## Run
+## Repro Steps
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Open `http://127.0.0.1:43110/`.
+Then open:
 
-The page auto-sends one prompt into a fresh agent session and replays the captured tool stream at a fixed `8x` speed.
+```text
+http://127.0.0.1:43110/
+```
+
+The page automatically:
+
+1. connects to `TraceReplayAgent`
+2. sends one user message
+3. replays a captured multi-tool stream at fixed `8x` speed
 
 ## Expected Result
 
-The page should:
-
-1. connect to `TraceReplayAgent`
-2. auto-send one message
-3. stream the replayed tool calls
-4. end in `Status: error`
-5. render:
+The page should end in an error state and render:
 
 ```text
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 ```
 
+In my verification runs, the page also shows the assistant tool list partially applied when the error occurs, which is consistent with the stream failing mid-update rather than after completion.
+
 ## Default Replay Shape
 
-The default checked-in replay is the full captured `trace8` failure shape:
+The checked-in replay uses the full captured failure shape because it reproduces reliably:
 
 - `6` `query_history` tool calls
 - `91` `tool-input-delta` chunks
 - `6` `tool-input-start`
 - `6` `tool-input-available`
 - `6` `tool-output-available`
-- replayed at fixed `8x` speed
+- fixed `8x` replay speed
 
-I am using that fuller replay as the default because it reproduces reliably under repeated fresh-browser verification.
+The replay metadata is in [`fixtures/trace8-replay.json`](./fixtures/trace8-replay.json).
 
-## Reduced Floor I Found
+## Why This Repo Exists
 
-While stripping the repro down, the smallest reduced replay I saw fail in this plain-JS / no-router version was:
+The point of this repo is to isolate the failure to the chat streaming stack with as little unrelated surface as possible:
 
-- `69` `tool-input-delta` chunks
+- one page
+- one agent
+- one request
+- one captured stream
 
-Nearby non-failing point:
+That makes it easier to reason about whether the bug lives in application code, Cloudflare transport code, or the downstream AI SDK React store.
 
-- `68` `tool-input-delta` chunks did **not** reproduce
+## Root Cause Hypothesis
 
-The current renderer is also intentionally small:
+The strongest current explanation is:
 
-- one `chat.messages.length` read
-- one list of tool states
-- one rendered error block
-
-That matters because it shows the bug does **not** require React Router or a large application shell. It only needs enough synchronous render work on top of the streamed chat updates.
-
-## Why This Is Not A React Router Bug
-
-This repo does not use React Router anymore and it still reproduces.
-
-So React Router can affect the render threshold in a larger app, but it is not the fundamental write loop that triggers this error.
-
-## Root Cause
-
-The most plausible root cause is a synchronous external-store publish storm across the Cloudflare transport boundary and the AI SDK React store.
+```text
+streamed chunk burst -> per-chunk assistant message replacement -> synchronous external-store rerender storm
+```
 
 Pinned source references below use the exact published package commits:
 
 - `@cloudflare/ai-chat@0.4.4`: [`2982b019736376b7fe3f7447839946618997a44f`](https://github.com/cloudflare/agents/tree/2982b019736376b7fe3f7447839946618997a44f)
 - `@ai-sdk/react@3.0.170` / `ai@6.0.162`: [`c38119a2e3df201a95a9979580f2c7a3c1b319ab`](https://github.com/vercel/ai/tree/c38119a2e3df201a95a9979580f2c7a3c1b319ab)
 
-The critical path is:
+The relevant path is:
 
-1. `useAgentChat()` is a thin wrapper over `useChat()`, and it forwards the remaining chat options straight into `useChat(...)`: [`react.tsx#L366-L370`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L366-L370), [`react.tsx#L820-L829`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L820-L829).
-2. Cloudflare's `WebSocketChatTransport` parses each websocket body as a `UIMessageChunk` and immediately forwards it with `controller.enqueue(chunk)`, with no batching at the transport boundary: [`ws-chat-transport.ts#L241-L245`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L241-L245), [`ws-chat-transport.ts#L526-L529`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L526-L529), [`ws-chat-transport.ts#L607-L611`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L607-L611).
-3. In the AI SDK, every `tool-input-delta` chunk reparses partial JSON and then calls `write()` immediately: [`process-ui-message-stream.ts#L564-L600`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/ai/src/ui/process-ui-message-stream.ts#L564-L600).
-4. That write path updates the active assistant message through `replaceMessage(...)` on every streamed step: [`chat.ts#L687-L708`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/ai/src/ui/chat.ts#L687-L708).
-5. `ReactChatState.replaceMessage(...)` deep-clones the full message and synchronously notifies all message subscribers: [`chat.react.ts#L56-L97`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/chat.react.ts#L56-L97).
-6. `useChat()` consumes that state through `useSyncExternalStore(...)`: [`use-chat.ts#L111-L135`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/use-chat.ts#L111-L135).
+1. `useAgentChat()` forwards the chat options into `useChat(...)` and installs `WebSocketChatTransport` as the transport layer:
+   [`react.tsx#L366-L370`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L366-L370),
+   [`react.tsx#L820-L829`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L820-L829)
+2. Cloudflare transport parses each websocket body and immediately forwards each parsed chunk with `controller.enqueue(chunk)`:
+   [`ws-chat-transport.ts#L241-L245`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L241-L245),
+   [`ws-chat-transport.ts#L526-L529`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L526-L529),
+   [`ws-chat-transport.ts#L607-L611`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/ws-chat-transport.ts#L607-L611)
+3. In the AI SDK, every `tool-input-delta` chunk reparses partial JSON and calls `write()` immediately:
+   [`process-ui-message-stream.ts#L564-L600`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/ai/src/ui/process-ui-message-stream.ts#L564-L600)
+4. That write path updates the active assistant message through `replaceMessage(...)` on each streamed step:
+   [`chat.ts#L687-L708`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/ai/src/ui/chat.ts#L687-L708)
+5. `ReactChatState.replaceMessage(...)` deep-clones the message and synchronously notifies subscribers:
+   [`chat.react.ts#L56-L97`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/chat.react.ts#L56-L97)
+6. `useChat()` consumes that store through `useSyncExternalStore(...)`:
+   [`use-chat.ts#L111-L135`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/use-chat.ts#L111-L135)
 
-That matches the production stack:
+That path matches the observed stack shape:
 
 ```text
 ReactChatState.replaceMessage -> callbacks -> forceStoreRerender
 ```
 
-So the failure is best described as:
+## Why I Think The Bug Is In This Layer
 
-```text
-chunk burst -> per-chunk message replacement -> synchronous external-store rerender storm
-```
+The evidence this repo isolates:
 
-## Rough Fix
+- The failure happens while streaming tool-call input deltas, not after the stream is complete.
+- The error is triggered by a burst of `tool-input-delta` chunks.
+- The observed stack points at chat-store update fanout, not application-local state.
+- The reproduction still occurs with a very small app surface.
 
-The best first fix is in the Cloudflare transport layer, not in application code.
+That makes this look less like an app bug and more like a transport/store interaction under high-frequency chunk delivery.
 
-Most promising change:
+## Likely Fix Surface
+
+The most promising fix is at the Cloudflare transport boundary:
 
 - coalesce consecutive `tool-input-delta` chunks before calling `controller.enqueue(chunk)`
 
-Why that fix is attractive:
+Why that seems like the best first fix:
 
-- it preserves the real websocket protocol
-- it reduces pressure before the chunks reach `useChat()`
-- it targets the exact boundary where Cloudflare currently forwards each chunk one-by-one
+- it preserves the websocket protocol
+- it reduces update pressure before the chunks reach `useChat()`
+- it targets the exact place where Cloudflare currently forwards every parsed chunk one-by-one
 
-If Cloudflare wants to preserve fully granular transport semantics, then the next best fix is in the AI SDK React store:
+If Cloudflare wants to preserve fully granular chunk delivery, then the next best fix is in the AI SDK React store:
 
 - batch `replaceMessage()` subscriber notifications
-- or defer them out of the synchronous callback path
+- or defer subscriber fanout out of the synchronous `replaceMessage()` path
 
-## Temporary Mitigation
+## Existing Mitigation
 
-This is not the root fix, but there is an existing mitigation path:
+There is already a mitigation path in the AI SDK:
 
-- `useChat()` already supports `experimental_throttle`: [`use-chat.ts#L42-L50`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/use-chat.ts#L42-L50)
-- throttled subscriptions are wired through `~registerMessagesCallback(...)`: [`chat.react.ts#L68-L79`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/chat.react.ts#L68-L79)
-- `useAgentChat()` inherits those options because it extends `UseChatParams` and forwards `...rest` into `useChat(...)`: [`react.tsx#L366-L370`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L366-L370), [`react.tsx#L820-L829`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L820-L829)
+- `useChat()` supports `experimental_throttle`:
+  [`use-chat.ts#L42-L50`](https://github.com/vercel/ai/blob/c38119a2e3df201a95a9979580f2c7a3c1b319ab/packages/react/src/use-chat.ts#L42-L50)
+- `useAgentChat()` inherits that option because it extends `UseChatParams` and forwards the remaining options into `useChat(...)`:
+  [`react.tsx#L366-L370`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L366-L370),
+  [`react.tsx#L820-L829`](https://github.com/cloudflare/agents/blob/2982b019736376b7fe3f7447839946618997a44f/packages/ai-chat/src/react.tsx#L820-L829)
 
-So an app can try:
+Example:
 
 ```tsx
 useAgentChat({
@@ -170,4 +166,4 @@ useAgentChat({
 })
 ```
 
-That can reduce the symptom, but it does not change the underlying fact that the transport and store still process the full burst one chunk at a time.
+That may reduce or hide the symptom, but it does not change the underlying one-chunk-at-a-time transport behavior.
