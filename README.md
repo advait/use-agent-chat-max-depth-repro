@@ -6,126 +6,160 @@ Minimal Cloudflare Workers + Agents + React Router reproduction for:
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 ```
 
-This repo uses:
+## Purpose
 
-- a real `AIChatAgent`
-- a real `useAgentChat` client
-- a replay of a captured production multi-tool stream
+This repo exists to demonstrate a bug in the Cloudflare chat client stack with the smallest honest surface I could get to while still preserving the real failure mode.
 
-The replay fixture is not hand-authored message state. It is a serialized production chunk sequence derived from a real failing run.
+What is real here:
+
+- real `AIChatAgent`
+- real `useAgentChat`
+- real streamed `cf_agent_use_chat_response` semantics
+- replay data derived from a captured production failure
+
+What is reduced:
+
+- the original production tool outputs were replaced with tiny placeholders
+- adjacent `tool-input-delta` chunks were merged during reduction to find the failure floor
+- the UI is stripped down to one page that only renders status, a small amount of metadata, and the current tool states
+
+This is not a hand-authored fake message list. The agent still streams SSE chunks through the normal `AIChatAgent` / `useAgentChat` path.
 
 ## Run
 
 ```bash
 pnpm install
 pnpm cf-typegen
-pnpm dev
+pnpm dev --host 127.0.0.1 --port 43110
 ```
 
-Open the local URL printed by Vite and wait for the page to auto-run the replay.
-The page defaults to `8x` replay speed because the failure is burst-sensitive in this stripped-down repro.
+Open `http://127.0.0.1:43110/`.
+
+The page auto-sends one prompt into a fresh agent session and replays the captured multi-tool stream at `8x` speed.
 
 ## Expected result
 
 The page should:
 
-1. connect to the `TraceReplayAgent`
-2. auto-send one prompt into a fresh session
-3. replay the captured multi-tool stream
+1. connect to `TraceReplayAgent`
+2. auto-send one user message
+3. stream the replayed tool calls
 4. end with `status: error`
-5. render the React error text:
+5. render the React error text
 
 ```text
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 ```
 
-## Current reduced failure shape
+The console stack points into the Cloudflare chat client path:
 
-This repo is no longer replaying the full captured trace.
+```text
+ReactChatState.replaceMessage -> callbacks -> forceStoreRerender
+```
 
-The current minimum known failing shape in this stripped-down app is:
+## Current minimum failing shape
+
+The current minimum known failing shape in this repo is:
 
 - `5` `query_history` tool calls
-- `60` total `tool-input-delta` chunks
+- `57` total `tool-input-delta` chunks
+- `5` `tool-input-start`
+- `5` `tool-input-available`
+- `5` `tool-output-available`
 - replayed at `8x` speed
 
-During the reduction pass:
+Important nearby non-failing points:
 
-- `5` tool calls with `55` total `tool-input-delta` chunks did **not** reproduce
-- `5` tool calls with `60` total `tool-input-delta` chunks **did** reproduce
-- the failure still reproduced after removing the local scroll-lock state machine, which points back to the chat client/store path rather than app-local React state
+- `54` deltas: does **not** reproduce
+- `56` deltas: does **not** reproduce
+- `57` deltas: **does** reproduce
+
+The threshold is also render-sensitive:
+
+- rendering the flattened tool pills is enough to reproduce
+- replacing that with a single derived summary string is not enough
+- even a tiny extra read of `chat.messages.length` changes the failure threshold
+
+That strongly suggests the bug is not just “too many deltas”. It is “a synchronous store-update burst plus enough concurrent React render work”.
+
+## Current reduction state
+
+What has been removed already:
+
+- app-specific workout/coach logic
+- route complexity beyond a single page
+- large captured tool output payloads
+- per-message text rendering
+- local scroll state / sheet behavior from the production app
+- nonessential controls and status chrome
+
+What still remains because removing it stopped the repro:
+
+- rendering each tool entry as its own DOM node
+- a second `chat.messages`-derived read (`messageCount`) in render
+
+Those last two points are useful signal, not fluff. They show that the failure threshold moves with render work even though the thrown stack stays inside the Cloudflare client.
 
 ## Cause
 
-The most likely root cause is a synchronous update storm inside the Cloudflare chat client stack, not in the application code.
+The best current explanation is:
 
-Evidence from the reduction:
+1. the replay emits a dense burst of `tool-input-delta` chunks
+2. `@cloudflare/ai-chat` handles each chunk by calling `ReactChatState.replaceMessage()`
+3. `replaceMessage()` deep-clones the message and synchronously notifies every message subscriber
+4. `useAgentChat()` exposes that store through `useSyncExternalStore`
+5. when React is still reconciling the previous snapshot and another synchronous store publish lands, React eventually trips its nested update guard
 
-- the repro still fails with a static renderer that does not keep any local UI state besides the `useAgent` / `useAgentChat` hook state
-- the failure depends on the density of streamed `tool-input-delta` updates rather than any specific business logic
-- the stack observed in the original app pointed into the Cloudflare chat state path:
-  `ReactChatState.replaceMessage -> callbacks -> forceStoreRerender`
-- the reproduced failure surface is just:
-  real `AIChatAgent` transport + real `useAgentChat` + a burst of streamed tool-input deltas
+Why I think this is the real root cause:
 
-The working theory is:
+- the thrown stack is consistently inside `ReactChatState.replaceMessage -> callbacks -> forceStoreRerender`
+- the repro survives after removing all application-specific logic
+- the repro threshold moves when delta density changes
+- the repro threshold also moves when render work changes, even though the application itself never calls `setState` in a loop
 
-1. the agent stream delivers many `tool-input-delta` chunks in a tight burst
-2. `@cloudflare/ai-chat` applies each chunk by synchronously replacing the assistant message in the chat store
-3. each replacement synchronously notifies React subscribers
-4. under a dense enough burst, React hits its nested update guard and throws `Maximum update depth exceeded`
+That combination fits a store-publish problem much better than an app-state bug.
 
-## Proposed Fix
+## Proposed fix
 
-The rough fix should happen in the Cloudflare chat client layer, not in application code.
+The fix should happen in the Cloudflare chat client layer rather than in application code.
 
-Most promising options:
+The most promising options are:
 
-1. Coalesce `tool-input-delta` chunks before notifying React subscribers.
-   For example, batch multiple deltas for the same assistant message into one store publish per microtask or animation frame.
+1. Batch `tool-input-delta` updates before publishing to React subscribers.
+   One publish per microtask or animation frame is likely enough.
 
-2. Treat `tool-input-delta` as transient transport state rather than a full UI-store replacement boundary.
-   In practice, many apps do not need every intermediate tool-input token to cause a full `replaceMessage()` fanout.
+2. Do not treat every `tool-input-delta` as a full message replacement boundary.
+   Keep ingesting the raw stream, but avoid `replaceMessage()` fanout for every partial tool-argument token.
 
-3. Defer subscriber notification from the synchronous `replaceMessage()` path.
-   If the store must ingest every delta, the publish path should still avoid recursively forcing subscriber rerenders for each chunk.
+3. Defer subscriber notification out of the synchronous `replaceMessage()` path.
+   Even if the store wants every delta, React subscribers should not be forced synchronously for each one.
 
-4. Optionally suppress intermediate tool-input streaming for tool arguments on the client.
-   A client could choose to surface only:
+4. Optionally expose a client mode that suppresses intermediate tool-input streaming.
+   Many UIs only need:
    - `tool-input-start`
    - `tool-input-available`
    - `tool-output-available`
-   instead of every `tool-input-delta`
 
-The highest-leverage change appears to be:
+The rough fix I would try first in `@cloudflare/ai-chat` is:
 
-- keep ingesting the raw stream
-- but batch or suppress intermediate `tool-input-delta` message-store updates before they hit React subscribers
-
-## Why this is minimal
-
-- one route
-- one worker entry
-- one `AIChatAgent`
-- one reduced replay fixture derived from the captured production stream
-- no application-specific database or tool code
-- a stripped-down static renderer that only shows message text plus tool name/state
+- coalesce consecutive `tool-input-delta` updates for the same message/tool call
+- publish the merged snapshot once per tick instead of once per delta
 
 ## Why React Router Is Still Here
 
-React Router is not part of the suspected bug surface.
+React Router is not the suspected bug surface.
 
-It remains only because it is the simplest way in this repo to serve:
+It remains because it is the simplest same-origin way in this repo to serve:
 
-- the single-page React client
+- the single-page client
 - the Worker entry
-- the same-origin `/agents/...` endpoints used by `useAgentChat`
+- the `/agents/...` endpoints used by `useAgentChat`
 
-The current reduction work suggests the bug lives in the `AIChatAgent` / `useAgentChat` stream application path, not in route handling.
+I attempted removing React Router entirely. That changed the dev/runtime shape enough that it was no longer a reliable reduction. I kept the smaller honest repro instead of a “cleaner” but non-reproducing one.
 
 ## Relevant files
 
-- `workers/replay-agent.ts`
-- `fixtures/trace8-replay.json`
 - `app/routes/home.tsx`
+- `fixtures/trace8-replay.json`
+- `workers/replay-agent.ts`
 - `workers/app.ts`
