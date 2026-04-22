@@ -1,6 +1,5 @@
-import { useAgentChat } from "@cloudflare/ai-chat/react";
-import { getToolPartState } from "@cloudflare/ai-chat/react";
-import { getToolName, isToolUIPart, type UIMessage } from "ai";
+import { getToolPartState, useAgentChat } from "@cloudflare/ai-chat/react";
+import { getToolName, isToolUIPart } from "ai";
 import { useAgent } from "agents/react";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
@@ -12,25 +11,8 @@ const DEFAULT_REPLAY_SPEED_MULTIPLIER = 8;
 
 interface ReplayFixtureSummary {
   readonly captureRequestId: string;
-  readonly durationMs: number;
-  readonly inputAvailableCount: number;
   readonly inputDeltaCount: number;
-  readonly outputAvailableCount: number;
   readonly toolCount: number;
-}
-
-function formatDuration(durationMs: number) {
-  return `${(durationMs / 1000).toFixed(3)}s`;
-}
-
-function getTextPartText(part: UIMessage["parts"][number]) {
-  if (part.type !== "text") {
-    return null;
-  }
-
-  const text = part.text.trim();
-
-  return text.length > 0 ? text : null;
 }
 
 function getChatErrorMessage(error: Error | undefined) {
@@ -99,6 +81,14 @@ export default function Home() {
   }, [chat.error]);
 
   const chatErrorMessage = getChatErrorMessage(chat.error);
+  const messageCount = chat.messages.length;
+  const toolParts = chat.messages.flatMap((message) =>
+    message.parts.filter(isToolUIPart).map((part) => ({
+      key: `${message.id}:${part.toolCallId}`,
+      name: getToolName(part),
+      state: getToolPartState(part),
+    })),
+  );
 
   return (
     <main className="page">
@@ -107,7 +97,7 @@ export default function Home() {
         <p>
           This page auto-replays a captured production multi-tool stream through a real{" "}
           <code>AIChatAgent</code> and <code>useAgentChat</code> client at{" "}
-          <strong>{DEFAULT_REPLAY_SPEED_MULTIPLIER}x</strong> speed. Expected result:
+          <strong>{DEFAULT_REPLAY_SPEED_MULTIPLIER}x</strong> speed.
         </p>
         <pre className="callout">
           Maximum update depth exceeded. This can happen when a component repeatedly calls
@@ -139,64 +129,27 @@ export default function Home() {
             <strong>Deltas</strong>: {fixtureSummary.inputDeltaCount}
           </div>
           <div>
-            <strong>Replay</strong>: {formatDuration(fixtureSummary.durationMs)} at{" "}
-            {DEFAULT_REPLAY_SPEED_MULTIPLIER}x
+            <strong>Messages</strong>: {messageCount}
           </div>
         </div>
 
-        <section className="discussion-shell">
-          <div className="discussion-scroll">
-            <div className="messages">
-              {chat.messages.map((message) => {
-                const renderedParts = message.parts
-                  .map((part, index) => {
-                    const text = getTextPartText(part);
-
-                    if (text) {
-                      return (
-                        <p className="message-text" key={`${message.id}:text:${index}`}>
-                          {text}
-                        </p>
-                      );
-                    }
-
-                    if (isToolUIPart(part)) {
-                      return (
-                        <div className="tool-pill" key={`${message.id}:tool:${index}`}>
-                          <strong>{getToolName(part)}</strong>
-                          <span>{getToolPartState(part)}</span>
-                        </div>
-                      );
-                    }
-
-                    return null;
-                  })
-                  .filter((part) => part !== null);
-
-                if (renderedParts.length === 0) {
-                  return null;
-                }
-
-                return (
-                  <article className="message" key={message.id}>
-                    <header>
-                      <strong>{message.role}</strong>
-                      <span>{message.id}</span>
-                    </header>
-                    <div className="parts">{renderedParts}</div>
-                  </article>
-                );
-              })}
-
-              {chat.error ? (
-                <div className="error">
-                  <strong>Observed error</strong>
-                  <p>{chatErrorMessage}</p>
-                </div>
-              ) : null}
-            </div>
+        {chat.error ? (
+          <div className="error">
+            <strong>Observed error</strong>
+            <p>{chatErrorMessage}</p>
           </div>
-        </section>
+        ) : null}
+
+        {toolParts.length > 0 ? (
+          <div className="messages">
+            {toolParts.map((toolPart) => (
+              <div className="tool-pill" key={toolPart.key}>
+                <strong>{toolPart.name}</strong>
+                <span>{toolPart.state}</span>
+              </div>
+            ))}
+          </div>
+        ) : null}
       </section>
     </main>
   );
