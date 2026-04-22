@@ -1,18 +1,42 @@
 import { useAgentChat } from "@cloudflare/ai-chat/react";
+import { getToolPartState } from "@cloudflare/ai-chat/react";
+import { getToolName, isToolUIPart, type UIMessage } from "ai";
 import { useAgent } from "agents/react";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 import replayFixture from "../../fixtures/trace8-replay.json";
-import { ReproChatPanel } from "../repro-chat-panel";
-import {
-  DEFAULT_PROMPT,
-  DEFAULT_REPLAY_SPEED_MULTIPLIER,
-  REPLAY_AGENT_RUNTIME_NAME,
-  type ReplayFixtureSummary,
-} from "../../shared/repro";
+
+const REPLAY_AGENT_RUNTIME_NAME = "TraceReplayAgent";
+const DEFAULT_PROMPT = "Trigger the captured multi-tool trace replay.";
+const DEFAULT_REPLAY_SPEED_MULTIPLIER = 8;
+
+interface ReplayFixtureSummary {
+  readonly captureRequestId: string;
+  readonly durationMs: number;
+  readonly inputAvailableCount: number;
+  readonly inputDeltaCount: number;
+  readonly outputAvailableCount: number;
+  readonly toolCount: number;
+}
 
 function formatDuration(durationMs: number) {
   return `${(durationMs / 1000).toFixed(3)}s`;
+}
+
+function getTextPartText(part: UIMessage["parts"][number]) {
+  if (part.type !== "text") {
+    return null;
+  }
+
+  const text = part.text.trim();
+
+  return text.length > 0 ? text : null;
+}
+
+function getChatErrorMessage(error: Error | undefined) {
+  const message = error?.message?.trim();
+
+  return message && message.length > 0 ? message : "The chat could not complete this request.";
 }
 
 export function meta() {
@@ -74,6 +98,8 @@ export default function Home() {
     console.error("Repro chat error", chat.error);
   }, [chat.error]);
 
+  const chatErrorMessage = getChatErrorMessage(chat.error);
+
   return (
     <main className="page">
       <section className="panel">
@@ -118,7 +144,59 @@ export default function Home() {
           </div>
         </div>
 
-        <ReproChatPanel chat={chat} />
+        <section className="discussion-shell">
+          <div className="discussion-scroll">
+            <div className="messages">
+              {chat.messages.map((message) => {
+                const renderedParts = message.parts
+                  .map((part, index) => {
+                    const text = getTextPartText(part);
+
+                    if (text) {
+                      return (
+                        <p className="message-text" key={`${message.id}:text:${index}`}>
+                          {text}
+                        </p>
+                      );
+                    }
+
+                    if (isToolUIPart(part)) {
+                      return (
+                        <div className="tool-pill" key={`${message.id}:tool:${index}`}>
+                          <strong>{getToolName(part)}</strong>
+                          <span>{getToolPartState(part)}</span>
+                        </div>
+                      );
+                    }
+
+                    return null;
+                  })
+                  .filter((part) => part !== null);
+
+                if (renderedParts.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <article className="message" key={message.id}>
+                    <header>
+                      <strong>{message.role}</strong>
+                      <span>{message.id}</span>
+                    </header>
+                    <div className="parts">{renderedParts}</div>
+                  </article>
+                );
+              })}
+
+              {chat.error ? (
+                <div className="error">
+                  <strong>Observed error</strong>
+                  <p>{chatErrorMessage}</p>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </section>
       </section>
     </main>
   );
