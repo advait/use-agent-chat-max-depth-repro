@@ -1,11 +1,11 @@
 {
   "summary": {
     "captureRequestId": "Au2S1Z67",
-    "durationMs": 2800,
-    "inputAvailableCount": 6,
-    "inputDeltaCount": 72,
-    "outputAvailableCount": 6,
-    "toolCount": 6
+    "durationMs": 2778,
+    "inputAvailableCount": 5,
+    "inputDeltaCount": 60,
+    "outputAvailableCount": 5,
+    "toolCount": 5
   },
   "events": [
     {
@@ -854,110 +854,6 @@
     },
     {
       "chunk": {
-        "type": "tool-input-start",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "toolName": "query_history"
-      },
-      "delayMs": 2
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "{\\\"fi"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "lters"
-      },
-      "delayMs": 2
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "\\\": {\\\"e"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "xerc"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "iseSc"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "hemaId"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "\\\": \\\""
-      },
-      "delayMs": 2
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "split"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "_squat"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "_dum"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "bbell"
-      },
-      "delayMs": 1
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "inputTextDelta": "\\\"}, \\\"m"
-      },
-      "delayMs": 6
-    },
-    {
-      "chunk": {
         "type": "tool-output-available",
         "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
         "output": {
@@ -1046,21 +942,6 @@
     },
     {
       "chunk": {
-        "type": "tool-input-available",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "toolName": "query_history",
-        "input": {
-          "filters": {
-            "exerciseSchemaId": "split_squat_dumbbell",
-            "status": []
-          },
-          "metric": "top_set"
-        }
-      },
-      "delayMs": 0
-    },
-    {
-      "chunk": {
         "type": "tool-output-available",
         "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
         "output": {
@@ -1132,94 +1013,6 @@
         }
       },
       "delayMs": 0
-    },
-    {
-      "chunk": {
-        "type": "tool-output-available",
-        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
-        "output": {
-          "details": {
-            "reps": 8,
-            "rpe": 7,
-            "setId": "2025-11-28-b-day-pull-split-squat-ohp::set:1:3:2025-11-28-b-day-pull-split-squat-ohp-exercise-1:2025-11-28-b-day-pull-split-squat-ohp-exercise-1-set-3",
-            "workoutId": "2025-11-28-b-day-pull-split-squat-ohp"
-          },
-          "filters": {
-            "exerciseSchemaId": "split_squat_dumbbell",
-            "status": []
-          },
-          "metric": "top_set",
-          "ok": true,
-          "result": {
-            "previewSessions": [
-              {
-                "date": "2026-04-10T00:00:00.000Z",
-                "title": "Deadlift Day - Lower + Core",
-                "workoutId": "2026-04-14-deadlift-lower-core",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-12-26T22:01:49+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "workoutId": "2025-12-26-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-11-28T22:14:50+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "workoutId": "2025-11-28-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              }
-            ],
-            "sampleSize": 26,
-            "sessionCount": 6,
-            "sessions": [
-              {
-                "date": "2025-11-28T22:14:50+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "value": 55,
-                "workoutId": "2025-11-28-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-12-26T22:01:49+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "value": 50,
-                "workoutId": "2025-12-26-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-11-20T23:12:06+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "value": 50,
-                "workoutId": "2025-11-20-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-11-08T23:33:21+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "value": 50,
-                "workoutId": "2025-11-08-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              },
-              {
-                "date": "2025-11-13T23:43:28+00:00",
-                "title": "B Day - Pull / Split Squat / OHP",
-                "value": 45,
-                "workoutId": "2025-11-13-b-day-pull-split-squat-ohp",
-                "workoutStatus": "completed"
-              }
-            ],
-            "unit": "load_lbs",
-            "value": "55 lb x 8"
-          },
-          "window": {
-            "dateFrom": null,
-            "dateTo": null
-          }
-        }
-      },
-      "delayMs": 1
     },
     {
       "chunk": {
