@@ -23,7 +23,7 @@ pnpm dev
 ```
 
 Open the local URL printed by Vite and wait for the page to auto-run the replay.
-The page defaults to `4x` replay speed because the failure is burst-sensitive; `1x` may complete successfully.
+The page defaults to `8x` replay speed because the failure is burst-sensitive in this stripped-down repro.
 
 ## Expected result
 
@@ -39,14 +39,42 @@ The page should:
 Maximum update depth exceeded. This can happen when a component repeatedly calls setState inside componentWillUpdate or componentDidUpdate.
 ```
 
+## Current reduced failure shape
+
+This repo is no longer replaying the full captured trace.
+
+The current minimum known failing shape in this stripped-down app is:
+
+- `6` `query_history` tool calls
+- `72` total `tool-input-delta` chunks
+- replayed at `8x` speed
+
+During the reduction pass:
+
+- `5` tool calls did **not** reproduce in this stripped-down app
+- `48` total `tool-input-delta` chunks did **not** reproduce
+- `72` total `tool-input-delta` chunks did reproduce on repeated fresh loads
+
 ## Why this is minimal
 
 - one route
 - one worker entry
 - one `AIChatAgent`
-- one replay fixture
+- one reduced replay fixture derived from the captured production stream
 - no application-specific database or tool code
-- a stripped-down coach-sheet-style panel because the transport alone was not sufficient to trigger the bug
+- a stripped-down chat panel that only keeps the stateful scroll behavior needed to trigger the bug
+
+## Why React Router Is Still Here
+
+React Router is not part of the suspected bug surface.
+
+It remains only because it is the simplest way in this repo to serve:
+
+- the single-page React client
+- the Worker entry
+- the same-origin `/agents/...` endpoints used by `useAgentChat`
+
+The current reduction work suggests the bug lives in the `AIChatAgent` / `useAgentChat` stream application path plus the minimal local scroll state, not in route handling.
 
 ## Relevant files
 
