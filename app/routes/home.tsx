@@ -35,9 +35,9 @@ export function meta() {
 export default function Home() {
   const fixtureSummary = replayFixture.summary as ReplayFixtureSummary;
   const [sessionGeneration, setSessionGeneration] = useState(0);
-  const [sessionPrefix] = useState(() => crypto.randomUUID());
+  const sessionPrefixRef = useRef(crypto.randomUUID());
   const autoStartedSessionRef = useRef<string | null>(null);
-  const sessionName = `repro-${sessionPrefix}-${sessionGeneration}`;
+  const sessionName = `repro-${sessionPrefixRef.current}-${sessionGeneration}`;
   const agent = useAgent({
     agent: REPLAY_AGENT_RUNTIME_NAME,
     name: sessionName,
@@ -67,10 +67,6 @@ export default function Home() {
     autoStartedSessionRef.current = sessionName;
     void runReplay();
   }, [agent.identified, runReplay, sessionName]);
-
-  useEffect(() => {
-    autoStartedSessionRef.current = null;
-  }, [sessionName]);
 
   useEffect(() => {
     if (!chat.error) {

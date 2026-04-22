@@ -3,7 +3,7 @@
     "captureRequestId": "Au2S1Z67",
     "durationMs": 2778,
     "inputAvailableCount": 5,
-    "inputDeltaCount": 60,
+    "inputDeltaCount": 57,
     "outputAvailableCount": 5,
     "toolCount": 5
   },
@@ -32,17 +32,9 @@
       "chunk": {
         "type": "tool-input-delta",
         "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
-        "inputTextDelta": "{\\\"fi"
+        "inputTextDelta": "{\\\"filters"
       },
-      "delayMs": 7
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
-        "inputTextDelta": "lters"
-      },
-      "delayMs": 4
+      "delayMs": 11
     },
     {
       "chunk": {
@@ -162,17 +154,9 @@
       "chunk": {
         "type": "tool-input-delta",
         "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
-        "inputTextDelta": "{\\\"fi"
+        "inputTextDelta": "{\\\"filters"
       },
-      "delayMs": 7
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
-        "inputTextDelta": "lters"
-      },
-      "delayMs": 5
+      "delayMs": 12
     },
     {
       "chunk": {
@@ -281,17 +265,9 @@
       "chunk": {
         "type": "tool-input-delta",
         "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
-        "inputTextDelta": "{\\\"fi"
+        "inputTextDelta": "{\\\"filters"
       },
-      "delayMs": 5
-    },
-    {
-      "chunk": {
-        "type": "tool-input-delta",
-        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
-        "inputTextDelta": "lters"
-      },
-      "delayMs": 4
+      "delayMs": 9
     },
     {
       "chunk": {
