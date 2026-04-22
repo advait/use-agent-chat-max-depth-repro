@@ -2,18 +2,18 @@ import { AIChatAgent } from "@cloudflare/ai-chat";
 
 import replayFixture from "../fixtures/trace8-replay.json";
 
-function parseSpeedMultiplier(body: Record<string, unknown> | undefined) {
-  const speedMultiplier = body?.speedMultiplier;
+const REPLAY_SPEED_MULTIPLIER = 8;
+const REPLAY_EVENTS = replayFixture.events.map((event) => ({
+  ...event,
+  delayMs: Math.max(0, Math.round(event.delayMs / REPLAY_SPEED_MULTIPLIER)),
+}));
 
-  return typeof speedMultiplier === "number" && speedMultiplier > 0 ? speedMultiplier : 1;
-}
-
-function waitForDelay(delayMs: number, abortSignal: AbortSignal | undefined) {
+function waitForDelay(delayMs, abortSignal) {
   if (delayMs <= 0 || abortSignal?.aborted) {
     return Promise.resolve();
   }
 
-  return new Promise<void>((resolve) => {
+  return new Promise((resolve) => {
     const timeoutId = setTimeout(() => {
       abortSignal?.removeEventListener("abort", handleAbort);
       resolve();
@@ -28,17 +28,14 @@ function waitForDelay(delayMs: number, abortSignal: AbortSignal | undefined) {
   });
 }
 
-function createReplayResponse(
-  replayEvents: typeof replayFixture.events,
-  abortSignal: AbortSignal | undefined,
-) {
+function createReplayResponse(abortSignal) {
   const encoder = new TextEncoder();
 
   return new Response(
     new ReadableStream({
       async start(controller) {
         try {
-          for (const replayEvent of replayEvents) {
+          for (const replayEvent of REPLAY_EVENTS) {
             if (abortSignal?.aborted) {
               break;
             }
@@ -70,17 +67,8 @@ function createReplayResponse(
   );
 }
 
-type ReplayAgentOnFinish = Parameters<AIChatAgent<Env>["onChatMessage"]>[0];
-type ReplayAgentOptions = Parameters<AIChatAgent<Env>["onChatMessage"]>[1];
-
-export class TraceReplayAgent extends AIChatAgent<Env> {
-  override async onChatMessage(_onFinish: ReplayAgentOnFinish, options?: ReplayAgentOptions) {
-    const speedMultiplier = parseSpeedMultiplier(options?.body);
-    const replayEvents = replayFixture.events.map((event) => ({
-      ...event,
-      delayMs: Math.max(0, Math.round(event.delayMs / speedMultiplier)),
-    }));
-
-    return createReplayResponse(replayEvents, options?.abortSignal);
+export class TraceReplayAgent extends AIChatAgent {
+  async onChatMessage(_onFinish, options) {
+    return createReplayResponse(options?.abortSignal);
   }
 }

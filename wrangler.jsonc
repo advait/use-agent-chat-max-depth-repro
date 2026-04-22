@@ -1,9 +1,13 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "use-agent-chat-max-depth-repro",
-  "compatibility_date": "2026-04-16",
+  "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat", "experimental"],
-  "main": "./workers/app.ts",
+  "main": "./workers/app.js",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/agents/*"]
+  },
   "durable_objects": {
     "bindings": [
       {

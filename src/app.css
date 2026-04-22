@@ -1,0 +1,55 @@
+:root {
+  color-scheme: light;
+  font-family:
+    "SF Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco, Consolas,
+    monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1rem;
+  background: #fff;
+  color: #111;
+}
+
+button,
+code,
+pre {
+  font: inherit;
+}
+
+.page {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+h1,
+p,
+button,
+ul,
+pre {
+  margin: 0 0 1rem;
+}
+
+button {
+  padding: 0.5rem 0.75rem;
+}
+
+.facts,
+.tools {
+  padding-left: 1.25rem;
+}
+
+.tools li {
+  margin-bottom: 0.25rem;
+}
+
+.error {
+  white-space: pre-wrap;
+  border: 1px solid #c33;
+  padding: 0.75rem;
+}
