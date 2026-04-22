@@ -146,35 +146,6 @@ pre {
   padding: 1rem;
 }
 
-.repro-panel {
-  display: grid;
-  gap: 1rem;
-}
-
-.repro-panel-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.empty-state {
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 1px dashed rgba(25, 21, 16, 0.16);
-  background: rgba(255, 255, 255, 0.52);
-  color: #5d4b38;
-}
-
-.activity-pill {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.45rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(110, 84, 43, 0.12);
-  color: #5c4726;
-  font-size: 0.84rem;
-}
-
 .message header {
   display: flex;
   flex-wrap: wrap;
@@ -191,14 +162,6 @@ pre {
 .parts {
   display: grid;
   gap: 0.75rem;
-}
-
-.message-user {
-  background: rgba(123, 90, 42, 0.12);
-}
-
-.message-assistant {
-  background: rgba(255, 255, 255, 0.7);
 }
 
 .message-text {
@@ -225,164 +188,23 @@ pre {
   font-size: 0.92rem;
 }
 
-.tool-body {
-  display: grid;
-  gap: 0.6rem;
-}
-
-.tool-session-list {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.tool-session-title {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tool-session-date {
-  flex-shrink: 0;
-  color: #6f5b44;
-}
-
-.tool-session {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: 0.8rem;
-  background: rgba(246, 241, 233, 0.95);
-  font-size: 0.82rem;
-}
-
-.tool-json {
-  margin: 0;
-  overflow-x: auto;
-  white-space: pre-wrap;
-}
-
-.tool-details summary {
-  cursor: pointer;
-}
-
 .discussion-end {
   height: 1rem;
 }
 
-.repro-tool-card {
-  display: grid;
-  gap: 0.75rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(25, 21, 16, 0.12);
-  background: rgba(246, 241, 233, 0.92);
-  padding: 0.85rem 1rem;
-}
-
-.repro-tool-card-running {
-  border-color: rgba(143, 101, 39, 0.3);
-  background: rgba(182, 138, 72, 0.08);
-}
-
-.repro-tool-card-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.repro-tool-card-title {
-  margin: 0;
-  font-weight: 700;
-}
-
-.tool-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.78rem;
-}
-
-.tool-badge-complete {
-  background: rgba(48, 125, 70, 0.14);
-  color: #1d6a33;
-}
-
-.tool-badge-error {
-  background: rgba(170, 54, 37, 0.12);
-  color: #8a2c1f;
-}
-
-.tool-badge-outline {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(25, 21, 16, 0.12);
-}
-
-.jump-row {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.jump-row button {
-  pointer-events: auto;
-  min-height: 2.6rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid rgba(25, 21, 16, 0.16);
-  border-radius: 999px;
-  background: rgba(255, 252, 247, 0.96);
-}
-
-.composer {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.composer textarea {
-  min-height: 7rem;
-  resize: vertical;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(25, 21, 16, 0.16);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.76);
-  font: inherit;
-}
-
-.composer-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.composer button,
-.repro-panel button {
-  min-height: 2.7rem;
-  padding: 0.65rem 0.95rem;
-  border: 1px solid rgba(25, 21, 16, 0.16);
-  border-radius: 0.9rem;
-  background: rgba(255, 255, 255, 0.94);
-  font: inherit;
+.controls button {
   cursor: pointer;
 }
 
-.composer button:disabled,
-.repro-panel button:disabled {
-  cursor: not-allowed;
-  opacity: 0.56;
-}
-
-.error-header {
+.tool-pill {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(25, 21, 16, 0.12);
+  background: rgba(246, 241, 233, 0.92);
 }
 
 @media (max-width: 720px) {
@@ -395,11 +217,8 @@ pre {
   }
 
   .tool,
-  .repro-tool-card-header,
-  .tool-session,
-  .message header,
-  .error-header,
-  .repro-panel-header {
+  .tool-pill,
+  .message header {
     flex-direction: column;
   }
 

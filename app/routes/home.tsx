@@ -1,10 +1,9 @@
 import { useAgentChat } from "@cloudflare/ai-chat/react";
-import type { UIMessage } from "ai";
 import { useAgent } from "agents/react";
 import { startTransition, useEffect, useEffectEvent, useId, useRef, useState } from "react";
 
 import replayFixture from "../../fixtures/trace8-replay.json";
-import { ReproChatPanel, type ReproChatController } from "../repro-chat-panel";
+import { ReproChatPanel } from "../repro-chat-panel";
 import {
   DEFAULT_PROMPT,
   DEFAULT_REPLAY_SPEED_MULTIPLIER,
@@ -15,16 +14,6 @@ import {
 
 function formatDuration(durationMs: number) {
   return `${(durationMs / 1000).toFixed(3)}s`;
-}
-
-function getSubmittedMessageText(message: Pick<UIMessage, "parts">) {
-  for (const part of message.parts) {
-    if (part.type === "text" && part.text.trim().length > 0) {
-      return part.text.trim();
-    }
-  }
-
-  return DEFAULT_PROMPT;
 }
 
 export function meta() {
@@ -57,16 +46,6 @@ export default function Home() {
     body: () => ({ speedMultiplier }),
     getInitialMessages: null,
   });
-
-  const chatController: ReproChatController = {
-    ...chat,
-    sendMessage: async (message) => {
-      const submittedPrompt = getSubmittedMessageText(message);
-
-      setLastPrompt(submittedPrompt);
-      return chat.sendMessage(message);
-    },
-  };
 
   const runReplay = useEffectEvent(async (prompt = lastPrompt) => {
     setLastPrompt(prompt);
@@ -214,9 +193,7 @@ export default function Home() {
         </div>
 
         <ReproChatPanel
-          chat={chatController}
-          emptyState="Send the captured trace8 replay through the same chat surface the production coach sheet uses."
-          placeholder="Ask anything. The replay agent ignores prompt text and always streams trace8."
+          chat={chat}
         />
       </section>
     </main>
