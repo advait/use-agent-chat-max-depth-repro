@@ -1,0 +1,1383 @@
+{
+  "summary": {
+    "captureRequestId": "Au2S1Z67",
+    "durationMs": 2893,
+    "inputAvailableCount": 6,
+    "inputDeltaCount": 91,
+    "outputAvailableCount": 6,
+    "toolCount": 6
+  },
+  "events": [
+    {
+      "chunk": {
+        "type": "start"
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "start-step"
+      },
+      "delayMs": 2532
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "toolName": "query_history"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 7
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "deadl"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "ift_ba"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "rbel"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "l\\\"}, "
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "\\\"metri"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "c\\\": "
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "\\\"top_"
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "inputTextDelta": "set\\\"}"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "deadlift_barbell",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "toolName": "query_history"
+      },
+      "delayMs": 3
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_Ulmf5szHk2JliCWwjweRS24a",
+        "output": {
+          "details": {
+            "reps": 5,
+            "rpe": 7,
+            "setId": "688f2576-8e8c-484c-a837-cd4f1725e8df",
+            "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5"
+          },
+          "filters": {
+            "exerciseSchemaId": "deadlift_barbell",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00:00:00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-10T00:00:00.000Z",
+                "title": "Deadlift Day - Lower + Core",
+                "workoutId": "2026-04-14-deadlift-lower-core",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 52,
+            "sessionCount": 10,
+            "sessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "value": 205,
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00:00:00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "value": 195,
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-29T23:18:44+00:00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 195,
+                "workoutId": "2025-11-29-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-10T00:00:00.000Z",
+                "title": "Deadlift Day - Lower + Core",
+                "value": 185,
+                "workoutId": "2026-04-14-deadlift-lower-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-23T23:21:24+00:00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 185,
+                "workoutId": "2025-11-23-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "205 lb x 5"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 7
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 7
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "front"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "_squat"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "\\\"}, "
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "\\\"metr"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "ic\\\": \\\""
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "top_"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "inputTextDelta": "set\\\"}"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "front_squat",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "toolName": "query_history"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "bench"
+      },
+      "delayMs": 7
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "_press"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "_bar"
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "bell\\\""
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "}, \\\"me"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "tric"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "\\\": \\\"t"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "op_set"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "inputTextDelta": "\\\"}"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "bench_press_barbell",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "toolName": "query_history"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 5
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "bench"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "_press"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "_dum"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "bbell"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "\\\"}, \\\"m"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "etri"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "c\\\": \\\""
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "top_se"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_RPjqhS2EsqYZVP6Mkyf1oWrW",
+        "output": {
+          "details": {
+            "reps": 5,
+            "rpe": 7,
+            "setId": "eaae49f3-bc9f-4515-bff9-4d971cca8c06",
+            "workoutId": "0d753739-f70f-4822-9e96-0e7e47d7a1d2"
+          },
+          "filters": {
+            "exerciseSchemaId": "front_squat",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2026-04-21T00: 00: 00.000Z",
+                "title": "Full Body B - Squat / Press / Pull / Single-Leg",
+                "workoutId": "0d753739-f70f-4822-9e96-0e7e47d7a1d2",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-17T00: 00: 00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00: 00: 00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 47,
+            "sessionCount": 10,
+            "sessions": [
+              {
+                "date": "2026-04-21T00: 00: 00.000Z",
+                "title": "Full Body B - Squat / Press / Pull / Single-Leg",
+                "value": 155,
+                "workoutId": "0d753739-f70f-4822-9e96-0e7e47d7a1d2",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00: 00: 00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "value": 125,
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-29T23: 18: 44+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 125,
+                "workoutId": "2025-11-29-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-17T00: 00: 00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "value": 115,
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-10T00: 00: 00.000Z",
+                "title": "Deadlift Day - Lower + Core",
+                "value": 115,
+                "workoutId": "2026-04-14-deadlift-lower-core",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "155 lb x 5"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "inputTextDelta": "t\\\"}"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "bench_press_dumbbell",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "toolName": "query_history"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 4
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "machi"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "ne_row"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "\\\"}, "
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "\\\"metr"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "ic\\\": \\\""
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "top_"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "inputTextDelta": "set\\\"}"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_KUu6u0klPPyAWvEE1NfvkjbD",
+        "output": {
+          "details": {
+            "reps": 5,
+            "rpe": 8.5,
+            "setId": "a15b5bd4-e6b0-45ae-8e6d-071453c5c722",
+            "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5"
+          },
+          "filters": {
+            "exerciseSchemaId": "bench_press_barbell",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-13T00:00:00.000Z",
+                "title": "Bench Press Day - Push / Upper Circuit",
+                "workoutId": "2026-04-16-bench-upper-circuit",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 10,
+            "sessionCount": 2,
+            "sessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "value": 135,
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-13T00:00:00.000Z",
+                "title": "Bench Press Day - Push / Upper Circuit",
+                "value": 125,
+                "workoutId": "2026-04-16-bench-upper-circuit",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "135 lb x 5"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "machine_row",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-start",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "toolName": "query_history"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "{\\\"fi"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "lters"
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "\\\": {\\\"e"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "xerc"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "iseSc"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "hemaId"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "\\\": \\\""
+      },
+      "delayMs": 2
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "split"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "_squat"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "_dum"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "bbell"
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "\\\"}, \\\"m"
+      },
+      "delayMs": 6
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "etri"
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "c\\\": \\\""
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "top_se"
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_xI7g1t7AW7gRJKiIPlLdtUbs",
+        "output": {
+          "details": {
+            "reps": 4,
+            "rpe": 8,
+            "setId": "2025-11-07-a: :set: 2: 1: 2025-11-07-a-exercise-3: 2025-11-07-a-exercise-3-set-1",
+            "workoutId": "2025-11-07-a"
+          },
+          "filters": {
+            "exerciseSchemaId": "bench_press_dumbbell",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2025-12-21T17: 17: 13+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "workoutId": "2025-12-21-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-29T23: 18: 44+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "workoutId": "2025-11-29-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-23T23: 21: 24+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "workoutId": "2025-11-23-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 29,
+            "sessionCount": 6,
+            "sessions": [
+              {
+                "date": "2025-11-07T21: 03: 32+00: 00",
+                "title": "A",
+                "value": 55,
+                "workoutId": "2025-11-07-a",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-29T23: 18: 44+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 52.5,
+                "workoutId": "2025-11-29-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-23T23: 21: 24+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 50,
+                "workoutId": "2025-11-23-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-15T20: 50: 18+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench / Core",
+                "value": 50,
+                "workoutId": "2025-11-15-a-day-hinge-front-squat-bench-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-10T23: 46: 33+00: 00",
+                "title": "A Day - Hinge / Front Squat / Bench (Nov 9)",
+                "value": 45,
+                "workoutId": "2025-11-10-a-day-hinge-front-squat-bench-nov-9",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "55 lb x 4"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-input-delta",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "inputTextDelta": "t\\\"}"
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-input-available",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "toolName": "query_history",
+        "input": {
+          "filters": {
+            "exerciseSchemaId": "split_squat_dumbbell",
+            "status": []
+          },
+          "metric": "top_set"
+        }
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_aqk7nBmECjgbGy1okMBvgsgZ",
+        "output": {
+          "details": {
+            "reps": 8,
+            "rpe": 7.5,
+            "setId": "0daed7f0-afe5-4a34-96cb-30b9b65047fc",
+            "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5"
+          },
+          "filters": {
+            "exerciseSchemaId": "machine_row",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00:00:00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-13T00:00:00.000Z",
+                "title": "Bench Press Day - Push / Upper Circuit",
+                "workoutId": "2026-04-16-bench-upper-circuit",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 9,
+            "sessionCount": 3,
+            "sessions": [
+              {
+                "date": "2026-04-17T00:00:00.000Z",
+                "title": "Full Body A - Hinge / Press / Squat / Row",
+                "value": 110,
+                "workoutId": "0f07e535-9eab-4e7e-aefd-c9b3c9ca13d5",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-14T00:00:00.000Z",
+                "title": "Deadlift + Front Squat Day",
+                "value": 95,
+                "workoutId": "2026-04-17-deadlift-front-squat-accessories",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2026-04-13T00:00:00.000Z",
+                "title": "Bench Press Day - Push / Upper Circuit",
+                "value": 90,
+                "workoutId": "2026-04-16-bench-upper-circuit",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "110 lb x 8"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 0
+    },
+    {
+      "chunk": {
+        "type": "tool-output-available",
+        "toolCallId": "call_Ly4Pxivc1ggilhRZF742W9g2",
+        "output": {
+          "details": {
+            "reps": 8,
+            "rpe": 7,
+            "setId": "2025-11-28-b-day-pull-split-squat-ohp::set:1:3:2025-11-28-b-day-pull-split-squat-ohp-exercise-1:2025-11-28-b-day-pull-split-squat-ohp-exercise-1-set-3",
+            "workoutId": "2025-11-28-b-day-pull-split-squat-ohp"
+          },
+          "filters": {
+            "exerciseSchemaId": "split_squat_dumbbell",
+            "status": []
+          },
+          "metric": "top_set",
+          "ok": true,
+          "result": {
+            "previewSessions": [
+              {
+                "date": "2026-04-10T00:00:00.000Z",
+                "title": "Deadlift Day - Lower + Core",
+                "workoutId": "2026-04-14-deadlift-lower-core",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-12-26T22:01:49+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "workoutId": "2025-12-26-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-28T22:14:50+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "workoutId": "2025-11-28-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              }
+            ],
+            "sampleSize": 26,
+            "sessionCount": 6,
+            "sessions": [
+              {
+                "date": "2025-11-28T22:14:50+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "value": 55,
+                "workoutId": "2025-11-28-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-12-26T22:01:49+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "value": 50,
+                "workoutId": "2025-12-26-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-20T23:12:06+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "value": 50,
+                "workoutId": "2025-11-20-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-08T23:33:21+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "value": 50,
+                "workoutId": "2025-11-08-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              },
+              {
+                "date": "2025-11-13T23:43:28+00:00",
+                "title": "B Day - Pull / Split Squat / OHP",
+                "value": 45,
+                "workoutId": "2025-11-13-b-day-pull-split-squat-ohp",
+                "workoutStatus": "completed"
+              }
+            ],
+            "unit": "load_lbs",
+            "value": "55 lb x 8"
+          },
+          "window": {
+            "dateFrom": null,
+            "dateTo": null
+          }
+        }
+      },
+      "delayMs": 1
+    },
+    {
+      "chunk": {
+        "type": "finish-step"
+      },
+      "delayMs": 0
+    }
+  ]
+}

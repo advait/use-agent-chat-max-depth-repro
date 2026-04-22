@@ -1,0 +1,410 @@
+:root {
+  color-scheme: light;
+  font-family:
+    "SF Mono", "JetBrains Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Monaco,
+    Consolas, monospace;
+  background: #f4f1ea;
+  color: #191510;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(202, 154, 84, 0.22), transparent 32rem),
+    linear-gradient(180deg, #f7f4ee 0%, #ece5d8 100%);
+}
+
+button,
+select {
+  font: inherit;
+}
+
+code,
+pre {
+  font: inherit;
+}
+
+.page {
+  padding: 2rem;
+}
+
+.panel {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border: 1px solid rgba(25, 21, 16, 0.12);
+  border-radius: 1.5rem;
+  background: rgba(255, 252, 247, 0.92);
+  box-shadow: 0 1.5rem 3rem rgba(43, 32, 17, 0.12);
+}
+
+.panel h1,
+.panel h2 {
+  margin-top: 0;
+}
+
+.callout,
+.message,
+.error,
+.meta,
+.part,
+.tool,
+.stats,
+.controls label {
+  border-radius: 1rem;
+  border: 1px solid rgba(25, 21, 16, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.callout,
+.error,
+.meta,
+.message,
+.stats {
+  padding: 1rem;
+}
+
+.stats {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.stats div {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.stats dt {
+  color: #6f5b44;
+  font-size: 0.9rem;
+}
+
+.stats dd {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.controls label {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem 1rem;
+}
+
+.controls button,
+.controls select {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(25, 21, 16, 0.2);
+  border-radius: 0.8rem;
+  background: #fff;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.meta {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.error {
+  margin-bottom: 1rem;
+  border-color: rgba(169, 47, 28, 0.3);
+  background: rgba(215, 76, 50, 0.07);
+}
+
+.messages {
+  display: grid;
+  gap: 1rem;
+}
+
+.discussion-shell {
+  border-radius: 1rem;
+  border: 1px solid rgba(25, 21, 16, 0.12);
+  background: rgba(255, 255, 255, 0.58);
+  position: relative;
+}
+
+.discussion-scroll {
+  max-height: 36rem;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.repro-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.repro-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.empty-state {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px dashed rgba(25, 21, 16, 0.16);
+  background: rgba(255, 255, 255, 0.52);
+  color: #5d4b38;
+}
+
+.activity-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(110, 84, 43, 0.12);
+  color: #5c4726;
+  font-size: 0.84rem;
+}
+
+.message header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.message header span {
+  color: #6f5b44;
+  font-size: 0.85rem;
+}
+
+.parts {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.message-user {
+  background: rgba(123, 90, 42, 0.12);
+}
+
+.message-assistant {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.message-text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.part {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.tool {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tool-copy {
+  margin: 0;
+  color: #5a4a39;
+  font-size: 0.92rem;
+}
+
+.tool-body {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.tool-session-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.tool-session-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-session-date {
+  flex-shrink: 0;
+  color: #6f5b44;
+}
+
+.tool-session {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.8rem;
+  background: rgba(246, 241, 233, 0.95);
+  font-size: 0.82rem;
+}
+
+.tool-json {
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.tool-details summary {
+  cursor: pointer;
+}
+
+.discussion-end {
+  height: 1rem;
+}
+
+.repro-tool-card {
+  display: grid;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(25, 21, 16, 0.12);
+  background: rgba(246, 241, 233, 0.92);
+  padding: 0.85rem 1rem;
+}
+
+.repro-tool-card-running {
+  border-color: rgba(143, 101, 39, 0.3);
+  background: rgba(182, 138, 72, 0.08);
+}
+
+.repro-tool-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.repro-tool-card-title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.tool-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+}
+
+.tool-badge-complete {
+  background: rgba(48, 125, 70, 0.14);
+  color: #1d6a33;
+}
+
+.tool-badge-error {
+  background: rgba(170, 54, 37, 0.12);
+  color: #8a2c1f;
+}
+
+.tool-badge-outline {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(25, 21, 16, 0.12);
+}
+
+.jump-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.jump-row button {
+  pointer-events: auto;
+  min-height: 2.6rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(25, 21, 16, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.96);
+}
+
+.composer {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.composer textarea {
+  min-height: 7rem;
+  resize: vertical;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(25, 21, 16, 0.16);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.76);
+  font: inherit;
+}
+
+.composer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.composer button,
+.repro-panel button {
+  min-height: 2.7rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid rgba(25, 21, 16, 0.16);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.94);
+  font: inherit;
+  cursor: pointer;
+}
+
+.composer button:disabled,
+.repro-panel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.error-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .panel {
+    padding: 1rem;
+  }
+
+  .tool,
+  .repro-tool-card-header,
+  .tool-session,
+  .message header,
+  .error-header,
+  .repro-panel-header {
+    flex-direction: column;
+  }
+
+  .discussion-scroll {
+    max-height: 28rem;
+    padding: 0.75rem;
+  }
+}

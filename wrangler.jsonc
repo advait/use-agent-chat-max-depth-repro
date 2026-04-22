@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "use-agent-chat-max-depth-repro",
+  "compatibility_date": "2026-04-16",
+  "compatibility_flags": ["nodejs_compat", "experimental"],
+  "main": "./workers/app.ts",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TraceReplayAgent",
+        "class_name": "TraceReplayAgent"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TraceReplayAgent"]
+    }
+  ]
+}
