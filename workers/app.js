@@ -1,8 +1,9 @@
 import { routeAgentRequest } from "agents";
 
 import { TraceReplayAgent } from "./replay-agent";
+import { SandboxTimeoutSweepAgent } from "./sweep-agent";
 
-export { TraceReplayAgent };
+export { TraceReplayAgent, SandboxTimeoutSweepAgent };
 
 export default {
   async fetch(request, env) {
